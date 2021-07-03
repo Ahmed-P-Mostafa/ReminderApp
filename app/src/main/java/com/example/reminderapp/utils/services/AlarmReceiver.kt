@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.reminderapp.R
 import com.example.reminderapp.pojo.database.LecturesDatabase
+import com.example.reminderapp.ui.AlarmActivity
 import com.example.reminderapp.ui.home.HomeActivity
 import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.Constants.CHANNEL_ID
@@ -68,7 +69,10 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun startAlarm(){
-        mediaPlayer?.start()
+        if (mediaPlayer !=null){
+            //mediaPlayer?.prepare()
+            mediaPlayer?.start()
+        }
     }
     private fun stopAlarm(id: Int){
         mediaPlayer?.stop()
@@ -79,24 +83,29 @@ class AlarmReceiver : BroadcastReceiver() {
 
     private fun deliverAlarmNotification(context: Context, id:Int, title:String, body:String) {
         Log.d(TAG, "deliverNotification: ")
-        val contentIntent = Intent(context, HomeActivity::class.java)
+        val contentIntent = Intent(context, AlarmActivity::class.java)
+        contentIntent.action = Constants.STOP_ACTION
+        contentIntent.putExtra(Constants.INTENT_EXTRA_ID,id)
+
+
+
+        val stopIntent = Intent(context.applicationContext, AlarmReceiver::class.java)
+        stopIntent.action = Constants.STOP_ACTION
+        stopIntent.putExtra(Constants.INTENT_EXTRA_ID,id)
+
+        val pendingIntent: PendingIntent =
+            PendingIntent.getBroadcast(
+                context, id, stopIntent, PendingIntent.FLAG_ONE_SHOT
+            )
+
+        val stopAction = NotificationCompat.Action(0, "Stop", pendingIntent)
+
         val contentPendingIntent = PendingIntent.getActivity(
             context,
             id,
             contentIntent,
             PendingIntent.FLAG_ONE_SHOT
         )
-
-        val stopIntent = Intent(context.applicationContext, AlarmReceiver::class.java)
-        stopIntent.putExtra("stop", "stop")
-        stopIntent.action = Constants.STOP_ACTION
-        stopIntent.putExtra(Constants.INTENT_EXTRA_ID,id)
-        val pendingIntent: PendingIntent =
-            PendingIntent.getBroadcast(
-                context.applicationContext, 1001, stopIntent, PendingIntent.FLAG_ONE_SHOT
-            )
-
-        val stopAction = NotificationCompat.Action(0, "Stop", pendingIntent)
 
         val notificationBuilder =
             NotificationCompat.Builder(context.applicationContext, CHANNEL_ID)
@@ -137,8 +146,8 @@ class AlarmReceiver : BroadcastReceiver() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-
-        mNotificationManager?.notify(id, notificationBuilder.build());
+        val random = Random().nextInt()
+        mNotificationManager?.notify(random, notificationBuilder.build());
     }
 
 }
