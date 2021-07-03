@@ -47,6 +47,7 @@ class LecturesAdapter(var list :List<Lecture>?):RecyclerView.Adapter<LecturesAda
     fun changeData(lecturesList: List<Lecture>) {
         this.list = lecturesList
         notifyDataSetChanged()
+
     }
 
     class ViewHolder(val binding:LectureItemBinding) :RecyclerView.ViewHolder(binding.root){

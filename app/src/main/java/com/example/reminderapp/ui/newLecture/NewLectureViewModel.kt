@@ -9,39 +9,38 @@ import java.util.*
 class NewLectureViewModel : BaseViewModel<Navigator>() {
     private val TAG = "TAG NewLectureViewModel"
 
-    var name = MutableLiveData<String>("web")
-    var code = MutableLiveData<String>("code")
+    var name = MutableLiveData<String>()
+    var code = MutableLiveData<String>()
     var location = MutableLiveData<String>()
-    var lectureType = MutableLiveData<String>()
-    var hours = MutableLiveData<Int>(9)
+    var lectureType = MutableLiveData<String>("Online")
+    var hours = MutableLiveData<Int>()
     var minutes = MutableLiveData<Int>()
     var year = MutableLiveData<Int>()
     var month = MutableLiveData<Int>()
-    var day = MutableLiveData<Int>(9)
-    var repeat: Int = 0
+    var day = MutableLiveData<Int>()
+    var repeat: Int = 14
 
 
     fun confirm() {
+        Log.d(TAG, "observe confirm: repeat = $repeat")
+        Log.d(TAG, "observe confirm: location = $location")
         if (isDataValid()) {
 
-                val time = getDate()
-                Log.d(TAG, "time from activity: $time")
-                Log.d(TAG, "time from calendar: ${Calendar.getInstance().timeInMillis}")
+            val time = getDate()
+            Log.d(TAG, "time from activity: $time")
+            Log.d(TAG, "time from calendar: ${Calendar.getInstance().timeInMillis}")
 
-                val lecture = Lecture(
-                    name = name.value,
-                    code = code.value,
-                    location = location.value,
-                    type = lectureType.value,
-                    repeatInterval = repeat,
-                    time = time
+            val lecture = Lecture(
+                name = name.value,
+                code = code.value,
+                location = location.value,
+                type = lectureType.value,
+                repeatInterval = repeat,
+                time = time
 
-                )
-                navigator?.insertLectureToDatabase(lecture)
-
-
-
-
+            )
+            Log.d(TAG, "confirm: repeat days $repeat")
+            navigator?.insertLectureToDatabase(lecture)
 
         } else {
             message.value = "Kindly make sure you fulfill all the information"

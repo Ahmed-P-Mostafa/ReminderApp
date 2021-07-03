@@ -6,6 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -18,7 +21,11 @@ import com.example.reminderapp.pojo.adapters.LecturesAdapter
 import com.example.reminderapp.pojo.database.LecturesDatabase
 import com.example.reminderapp.pojo.models.Lecture
 import com.example.reminderapp.ui.base.BaseActivity
+import com.example.reminderapp.ui.login.LoginActivity
 import com.example.reminderapp.ui.newLecture.NewLectureActivity
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 /**
  * check function when add new alarm or if the device reboot if there alarms before clock reset
@@ -27,11 +34,12 @@ import com.example.reminderapp.ui.newLecture.NewLectureActivity
  * */
 
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigator,LecturesAdapter.OnLectureLongPressListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigator,
+    LecturesAdapter.OnLectureLongPressListener {
 
 
     val adapter = LecturesAdapter(null)
-    lateinit var lecturesList :List<Lecture>
+    lateinit var lecturesList: List<Lecture>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.navigator = this
@@ -43,14 +51,47 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigato
         binding.recyclerView.adapter = adapter
 
         viewModel.webViewLiveData.observe(this, Observer {
-            if (it!="null"){
+            if (it != "null") {
                 showData(it)
             }
         })
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val menuInflater: MenuInflater = menuInflater
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.logout -> {
+                logout()
+                startActivity(Intent(this,LoginActivity::class.java))
+                finish()
+
+            }
+            R.id.deleteAll -> {
+                showDialog(
+                    title = "Caution!",
+                    message = "Do you want to delete all the lectures ?",
+                    negBtnText = "No",
+                    posBtnText = "Yes",
+                    posBtnClickListener = DialogInterface.OnClickListener { dialog, _ ->
+                        MainScope().launch {
+
+                            LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().deleteAll()
+                            lecturesList = LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().getAllLectures()
+                            adapter.changeData(lecturesList)
+
+                        }
+                    })
+            }
+        }
 
 
-
+        return true
     }
 
 
@@ -76,10 +117,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigato
 
     // Use this method in your UI, Activity or Fragment
     fun showData(result: String) {
-       val dialog =  AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
 
         dialog.setTitle("How to make my app work")
-        val viewWeb : View = layoutInflater.inflate(R.layout.webview_layout,null)
+        val viewWeb: View = layoutInflater.inflate(R.layout.webview_layout, null)
         val webView = findViewById<WebView>(R.id.webView)
         webView.webViewClient = WebViewClient()
         webView.loadUrl(result)
@@ -89,10 +130,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(),Navigato
         dialog.setPositiveButton(android.R.string.ok) { dialog, which ->
             dialog.dismiss()
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri: Uri = Uri.fromParts("package", packageName, null)
-                intent.data = uri
-                startActivity(intent)
-            }
+            val uri: Uri = Uri.fromParts("package", packageName, null)
+            intent.data = uri
+            startActivity(intent)
+        }
         dialog.show()
     }
 

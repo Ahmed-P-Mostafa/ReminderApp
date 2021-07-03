@@ -55,7 +55,6 @@ class DailyWorker(private val context: Context, workerParameters: WorkerParamete
     }
 
     private fun makeAlarmOnce(lecture: Lecture) {
-        //TODO make service class to ring and show notification
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(context, HomeActivity::class.java)

@@ -54,13 +54,17 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
         title: String,
         message: String,
         posBtnText: String,
-        posBtnClickListener: DialogInterface.OnClickListener
+        posBtnClickListener: DialogInterface.OnClickListener,
+        negBtnText:String
     ) {
         AlertDialog.Builder(this)
             .setTitle(title)
             .setMessage(message)
             .setCancelable(false)
             .setPositiveButton(posBtnText, posBtnClickListener)
+            .setNegativeButton(negBtnText) { dialog, _ ->
+                dialog.dismiss()
+            }
 
             .show()
     }
@@ -164,7 +168,7 @@ abstract class BaseActivity<DB : ViewDataBinding, VM : BaseViewModel<*>> : AppCo
                 showDialog(
                     title = "Application need Permission",
                     message = "${manufacturer.toUpperCase()} Devices need to allow \"auto start\" permission ", posBtnText =
-                    "Ok",posBtnClickListener =
+                    "Ok",negBtnText = "Cancel",posBtnClickListener =
                     DialogInterface.OnClickListener { dialog, which ->
                         dialog.dismiss()
                         setAutoStart()

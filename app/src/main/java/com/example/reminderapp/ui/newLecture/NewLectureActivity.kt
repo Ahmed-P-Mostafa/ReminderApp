@@ -9,9 +9,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.RadioButton
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
@@ -26,14 +23,8 @@ import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.DatePickerFragment
 import com.example.reminderapp.utils.TimePickerFragment
 import com.example.reminderapp.utils.services.AlarmReceiver
-import com.google.android.material.datepicker.MaterialDatePicker.Builder.datePicker
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.job
-import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.math.min
+import kotlin.math.log
 
 class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureViewModel>(),Navigator {
     private val TAG = "NewLectureActivity"
@@ -59,24 +50,27 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
                     binding.platformTil.visibility = View.VISIBLE
                     binding.locationTil.visibility = View.GONE
                     viewModel.lectureType.value = "Online"
+                    binding.typeRg.check(R.id.even_rb)
                 }
                 R.id.radioButtonOffline->{
                     binding.PlatformLabel.text = "Location"
                     binding.platformTil.visibility = View.GONE
                     binding.locationTil.visibility = View.VISIBLE
                     viewModel.lectureType.value = "Offline"
+                    binding.typeRg.check(R.id.odd_rb)
 
                 }
             }
         }
         binding.typeRg.setOnCheckedChangeListener { group, checkedId ->
 
+            Log.d(TAG, "onCreate: $checkedId")
             when(checkedId){
-                R.id.even_btn->{
-                    viewModel.repeat = 7
-                }
-                R.id.odd_btn->{
+                R.id.even_rb->{
                     viewModel.repeat = 14
+                }
+                R.id.odd_rb->{
+                    viewModel.repeat = 7
 
                 }
             }
@@ -182,6 +176,7 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
         viewModel.location.observe(this, Observer {
             Log.d(TAG, "observe: location ${it.toString()}")
         })
+
     }
 
     private fun scheduleAlarm(id:Int, trigger: Long) {
