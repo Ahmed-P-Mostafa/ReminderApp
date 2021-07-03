@@ -23,6 +23,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding,LoginViewModel>(),Naviga
     }
 
     override fun goToHome() {
+        login()
         startActivity(Intent(this,HomeActivity::class.java))
         finish()
     }
