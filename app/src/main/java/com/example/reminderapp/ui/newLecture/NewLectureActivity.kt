@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +23,6 @@ import com.example.reminderapp.utils.DatePickerFragment
 import com.example.reminderapp.utils.TimePickerFragment
 import com.example.reminderapp.utils.services.AlarmReceiver
 import java.util.*
-import kotlin.math.log
 
 class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureViewModel>(),Navigator {
     private val TAG = "NewLectureActivity"
@@ -36,7 +34,7 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
         binding.vm = viewModel
         viewModel.navigator = this
 
-        val platformList = listOf("Zoom","Google Meet")
+        val platformList = listOf("Zoom","Teams")
         observe()
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, platformList)
@@ -123,22 +121,28 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
     }
 
     override fun insertLectureToDatabase(lecture: Lecture) {
-        Log.d(TAG, "insertLectureToDatabase: ")
+        Log.d(TAG, "insert platform :${binding.platformEt.text.toString()} ")
+        Log.d(TAG, "insert location :${binding.locationEt.text.toString()} ")
+
+
         if(binding.attendanceRg.checkedRadioButtonId == R.id.radioButtonOnline){
+            if (binding.platformEt.text.toString().isNullOrBlank()){
+                showMessage("Please choose your lecture location")
+                return
+            }
             lecture.location = binding.platformEt.text.toString()
         }else{
+            if (binding.locationEt.text.toString().isNullOrBlank()){
+                showMessage("Please choose your lecture location")
+                return
+            }
             lecture.location = binding.locationEt.text.toString()
         }
 
 
             val id = LecturesDatabase.getInstance(this).lecturesDAO().insert(lecture)
             //Toast.makeText(this@NewLectureActivity, raw.toString(), Toast.LENGTH_SHORT).show()
-        if (checkForLectureDate(lecture)){
-            Log.d(TAG, "insertLectureToDatabase: yes ")
-            Log.d(TAG, "insertLectureToDatabase: id = $id")
-            Log.d(TAG, "insertLectureToDatabase: time = ${lecture.time}")
-
-
+        if (isLectureDateIsToday(lecture)){
             scheduleAlarm(id.toInt(),lecture.time?:Calendar.getInstance().timeInMillis)
         }
 
@@ -187,7 +191,7 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
         sendAlarm(id, trigger)
 
     }
-    private fun checkForLectureDate(lecture: Lecture): Boolean {
+    private fun isLectureDateIsToday(lecture: Lecture): Boolean {
         Log.d(TAG, "checkForLectureDate: ")
         val today = Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
         val lecDate = Calendar.getInstance()
@@ -218,7 +222,7 @@ class NewLectureActivity : BaseActivity<ActivityNewLectureBinding, NewLectureVie
         alarmIntent.putExtra(Constants.INTENT_EXTRA_ID, id)
 
         val alarmPendingIntent =
-            PendingIntent.getBroadcast(this, id, alarmIntent, PendingIntent.FLAG_ONE_SHOT)
+            PendingIntent.getBroadcast(this, id, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, alarmPendingIntent)
