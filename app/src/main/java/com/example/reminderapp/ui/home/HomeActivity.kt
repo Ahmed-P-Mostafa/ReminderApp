@@ -132,6 +132,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     override fun gotoNewLecture() {
         startActivity(Intent(this, NewLectureActivity::class.java))
 
+
     }
 
     // Use this method in your UI, Activity or Fragment

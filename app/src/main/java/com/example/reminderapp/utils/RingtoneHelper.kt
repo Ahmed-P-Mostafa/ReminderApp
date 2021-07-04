@@ -4,18 +4,19 @@ import android.content.Context
 import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.media.Ringtone
 import android.media.RingtoneManager
 
-class MediaPlayerHelper {
+class RingtoneHelper {
 
     companion object{
 
-        private var mInstance :MediaPlayer?=null
+        private var mInstance :Ringtone?=null
 
-        fun getInstance(context: Context):MediaPlayer{
+        fun getInstance(context: Context):Ringtone{
             if (mInstance==null){
                 val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                mInstance = MediaPlayer.create(context,uri)
+                mInstance = RingtoneManager.getRingtone(context,uri)
             }
             return mInstance!!
         }

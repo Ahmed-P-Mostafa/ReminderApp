@@ -62,7 +62,7 @@
                 app:layout_constraintTop_toBottomOf="@id/headerLabel"
                 android:layout_marginTop="12dp"
                 app:boxCornerRadiusTopStart="4dp"
-                android:hint="Web"
+                android:hint="Subject name"
                 app:boxCornerRadiusTopEnd="4dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 >
@@ -96,7 +96,7 @@
                 app:layout_constraintTop_toBottomOf="@id/name_til"
                 android:layout_marginTop="12dp"
                 app:boxCornerRadiusTopStart="4dp"
-                android:hint="cs210"
+                android:hint="Subject Code"
                 app:boxCornerRadiusTopEnd="4dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 >
@@ -127,7 +127,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/code_til"
+                app:layout_constraintTop_toBottomOf="@id/attendance_rg"
                 android:layout_marginTop="12dp"
                 android:checkedButton="@id/even_rb"
                 >
@@ -173,7 +173,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/type_rg"
+                app:layout_constraintTop_toBottomOf="@id/code_til"
                 android:layout_marginTop="12dp"
                 android:checkedButton="@id/radioButtonOnline">
                 <RadioButton
@@ -210,7 +210,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toEndOf="@id/guideline"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/attendance_rg"
+                app:layout_constraintTop_toBottomOf="@id/type_rg"
                 android:layout_marginTop="12dp"
                 app:boxCornerRadiusTopStart="4dp"
                 android:hint="30/12/2030"

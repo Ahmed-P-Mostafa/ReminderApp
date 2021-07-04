@@ -1,5 +1,6 @@
 package com.example.reminderapp.ui
 
+import android.app.Activity
 import android.app.PendingIntent
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.view.View
 import com.example.reminderapp.R
 import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.services.AlarmReceiver
+import kotlin.system.exitProcess
 
 class AlarmActivity : AppCompatActivity() {
     var i :Intent?=null
@@ -29,7 +31,8 @@ class AlarmActivity : AppCompatActivity() {
         stopIntent.action = Constants.STOP_ACTION
         stopIntent.putExtra(Constants.INTENT_EXTRA_ID,id)
 
-       sendBroadcast(stopIntent)
-
+        sendBroadcast(stopIntent)
+        finish()
+        finishAffinity()
     }
 }
