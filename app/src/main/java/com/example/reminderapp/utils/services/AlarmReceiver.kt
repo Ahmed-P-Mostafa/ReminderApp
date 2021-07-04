@@ -5,7 +5,10 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.Ringtone
 import android.os.Build
@@ -19,6 +22,7 @@ import com.example.reminderapp.ui.home.HomeActivity
 import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.Constants.CHANNEL_ID
 import com.example.reminderapp.utils.RingtoneHelper
+import com.google.android.gms.common.util.SharedPreferencesUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,9 +35,19 @@ class AlarmReceiver : BroadcastReceiver() {
     private var body = ""
     private var id = 0
     private var time = 0L
+    private var audioManagerState :Int?=null
+    private var oldAudioManagerState :Int?=null
+    private var audioManager:AudioManager?=null
+    private val SP = "RINGTONE_SHARED_PREFERENCES"
+    private val RINGER_KEY = "RingerKey"
+    private var sp :SharedPreferences ?=null
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onReceive(context: Context, intent: Intent) {
+        Log.d(TAG, "onReceive: ")
         mediaPlayer = RingtoneHelper.getInstance(context)
+        audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+
        // mediaPlayer!!.isLooping = true
         id = intent.getIntExtra(Constants.INTENT_EXTRA_ID, 0)
 
@@ -60,7 +74,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 updateLectureNextDate(id, context)
             } // stop button in notification
             Constants.STOP_ACTION -> {
-                stopAlarm(id)
+                stopAlarm(context,id)
             }
             // send prior notification for notice.
             Constants.NOTIFICATION_ACTION -> {
@@ -77,9 +91,28 @@ class AlarmReceiver : BroadcastReceiver() {
 
         }
     }
+    private fun getRingerModeState(context: Context):Int{
+        oldAudioManagerState = audioManager?.ringerMode
+        sp = context.getSharedPreferences(SP,MODE_PRIVATE)
+        val type = sp?.getInt(RINGER_KEY,-1)
+        return type?:-1
+    }
+    private fun setRingerModeState(mode:Int,context:Context){
+        val sp = context.getSharedPreferences(SP,MODE_PRIVATE)
+        val editor = sp.edit()
+        editor.putInt(RINGER_KEY,mode)
+        editor.apply()
+    }
 
     @RequiresApi(Build.VERSION_CODES.P)
     private fun startAlarm(context: Context) {
+        audioManagerState = audioManager?.ringerMode
+
+
+        if (audioManagerState != AudioManager.RINGER_MODE_NORMAL){
+            setRingerModeState(audioManagerState?:-1,context)
+            audioManager?.ringerMode = AudioManager.RINGER_MODE_NORMAL
+        }
         if (mediaPlayer != null) {
             Log.d(TAG, "startAlarm: alarm started and != null")
             //mediaPlayer?.prepare()
@@ -92,11 +125,19 @@ class AlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    private fun stopAlarm(id: Int) {
+    private fun stopAlarm(context: Context,id: Int) {
+        audioManagerState = audioManager?.ringerMode
+        val oldState = getRingerModeState(context)
+        if (audioManagerState!=oldState){
+            audioManager?.ringerMode = oldState
+        }
         mediaPlayer?.stop()
         //mediaPlayer?.release()
         mNotificationManager?.cancel(id)
         Log.d(TAG, "stopAlarm: stop alarm")
+
+            audioManager?.ringerMode = AudioManager.RINGER_MODE_SILENT
+
     }
 
 

@@ -1,9 +1,12 @@
 package com.example.reminderapp.ui.home
 
 import android.app.AlertDialog
+import android.app.NotificationManager
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
@@ -12,7 +15,6 @@ import android.view.MenuItem
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.reminderapp.R
@@ -23,9 +25,9 @@ import com.example.reminderapp.pojo.models.Lecture
 import com.example.reminderapp.ui.base.BaseActivity
 import com.example.reminderapp.ui.login.LoginActivity
 import com.example.reminderapp.ui.newLecture.NewLectureActivity
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+
 
 /**
  * check function when add new alarm or if the device reboot if there alarms before clock reset
@@ -130,7 +132,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
     }
 
     override fun gotoNewLecture() {
-        startActivity(Intent(this, NewLectureActivity::class.java))
+        val manager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+            && !manager.isNotificationPolicyAccessGranted
+        ) {
+            val intent = Intent(
+                Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS
+            )
+            startActivity(intent)
+        }else{
+            startActivity(Intent(this, NewLectureActivity::class.java))
+
+        }
+
 
 
     }
