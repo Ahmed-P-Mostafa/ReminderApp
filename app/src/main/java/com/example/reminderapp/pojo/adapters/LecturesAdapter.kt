@@ -1,7 +1,9 @@
 package com.example.reminderapp.pojo.adapters
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +12,7 @@ import com.example.reminderapp.pojo.models.Lecture
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LecturesAdapter(var list :List<Lecture>?):RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
+class LecturesAdapter(var context:Context,var list :List<Lecture>?):RecyclerView.Adapter<LecturesAdapter.ViewHolder>() {
     private val TAG = "LecturesAdapter"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,14 +26,16 @@ class LecturesAdapter(var list :List<Lecture>?):RecyclerView.Adapter<LecturesAda
         val item = list?.get(position)
         holder.bind(item!!)
 
-        holder.binding.tvName.setOnClickListener {
-            listener?.onLectureLongPressListener(item.id!!)
-            Log.d(TAG, "onBindViewHolder: ${item.id} ")
+
+        holder.binding.lectureParent.setOnLongClickListener {
+           // Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
+            listener?.onLectureLongPressListener(item);
+            return@setOnLongClickListener true
         }
     }
 
     interface OnLectureLongPressListener{
-        fun onLectureLongPressListener(id:Int)
+        fun onLectureLongPressListener(lecture: Lecture)
     }
 
     var listener :OnLectureLongPressListener?=null
@@ -53,6 +57,7 @@ class LecturesAdapter(var list :List<Lecture>?):RecyclerView.Adapter<LecturesAda
     class ViewHolder(val binding:LectureItemBinding) :RecyclerView.ViewHolder(binding.root){
 
 
+
         fun bind(item :Lecture){
             val dayFormat = SimpleDateFormat("EEE")
             val hoursFormat = SimpleDateFormat("HH:mm")
@@ -68,7 +73,9 @@ class LecturesAdapter(var list :List<Lecture>?):RecyclerView.Adapter<LecturesAda
             binding.tvTime.text = hour
             binding.invalidateAll()
 
-        }
 
+        }
     }
+
+
 }
