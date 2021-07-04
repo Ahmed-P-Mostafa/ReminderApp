@@ -34,11 +34,10 @@ import kotlinx.coroutines.launch
  * */
 
 
-class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigator,
-    LecturesAdapter.OnLectureLongPressListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigator{
 
 
-    val adapter = LecturesAdapter(null)
+    val adapter = LecturesAdapter(this, null)
     lateinit var lecturesList: List<Lecture>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +54,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
                 showData(it)
             }
         })
+        adapter.setOnLectureLongPressListener(object : LecturesAdapter.OnLectureLongPressListener {
+            override fun onLectureLongPressListener(lecture: Lecture) {
+                 showDialog(
+           title = "Caution !",
+           message = "Do you want to delete ${lecture.name} lecture !?",
+           negBtnText = "No",
+           posBtnText = "Yes",
+           posBtnClickListener = DialogInterface.OnClickListener { dialog, _ ->
+               LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().delete(lecture)
+               lecturesList = LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().getAllLectures()
+               adapter.changeData(lecturesList)
+               dialog.dismiss()
+           })
+
+            }
+
+        })
 
     }
 
@@ -68,7 +84,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         when (item.itemId) {
             R.id.logout -> {
                 logout()
-                startActivity(Intent(this,LoginActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
 
             }
@@ -81,8 +97,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
                     posBtnClickListener = DialogInterface.OnClickListener { dialog, _ ->
                         MainScope().launch {
 
-                            LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().deleteAll()
-                            lecturesList = LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO().getAllLectures()
+                            LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO()
+                                .deleteAll()
+                            lecturesList =
+                                LecturesDatabase.getInstance(this@HomeActivity).lecturesDAO()
+                                    .getAllLectures()
                             adapter.changeData(lecturesList)
 
                         }
@@ -148,11 +167,5 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeViewModel>(), Navigat
         }
     }
 
-    override fun onLectureLongPressListener(id: Int) {
 
-        val lecture = LecturesDatabase.getInstance(this).lecturesDAO().getLecture(id)
-
-        Toast.makeText(this, lecture.name, Toast.LENGTH_SHORT).show()
-
-    }
 }
