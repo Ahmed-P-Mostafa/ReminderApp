@@ -67,7 +67,9 @@ class DailyService : Service() {
 
     private fun sendPriorNotification(id: Int, trigger: Long) {
         val notificationIntent = Intent(this, AlarmReceiver::class.java)
+
         notificationIntent.action = Constants.NOTIFICATION_ACTION
+
         notificationIntent.putExtra(Constants.INTENT_EXTRA_ID, id)
 
         val notificationPendingIntent =

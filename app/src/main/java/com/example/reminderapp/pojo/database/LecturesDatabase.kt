@@ -8,6 +8,7 @@ import com.example.reminderapp.pojo.models.Lecture
 
 @Database(entities = arrayOf(Lecture::class),version = 4,exportSchema = false)
 abstract class LecturesDatabase :RoomDatabase() {
+
     abstract fun lecturesDAO():LecturesDAO
 
     companion object{

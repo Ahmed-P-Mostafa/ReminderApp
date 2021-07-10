@@ -11,5 +11,5 @@ data class Lecture(
     val code: String? = null,
     val type: String? = null,
     var time: Long? = null,
-    val repeatInterval: Int = 7
+    val repeatInterval: Int = 14
 )

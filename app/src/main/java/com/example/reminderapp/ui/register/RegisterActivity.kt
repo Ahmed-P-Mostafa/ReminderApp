@@ -25,7 +25,6 @@ class RegisterActivity : BaseActivity<ActivityRegisterBinding,RegisterViewModel>
         observers()
         binding.email.addTextChangedListener {
             Log.d(TAG, "onCreate: watcher = ${it.toString()}")
-
         }
 
     }

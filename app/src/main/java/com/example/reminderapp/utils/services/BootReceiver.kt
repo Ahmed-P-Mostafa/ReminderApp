@@ -1,19 +1,12 @@
-package com.example.reminderapp.utils
+package com.example.reminderapp.utils.services
 
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
-import androidx.work.*
-import com.example.reminderapp.pojo.database.LecturesDatabase
-import com.example.reminderapp.utils.services.DailyService
-import com.example.reminderapp.utils.workers.DailyWorker
 import java.util.*
-import java.util.concurrent.CancellationException
-import java.util.concurrent.TimeUnit
 
 class BootReceiver :BroadcastReceiver() {
     private val TAG = "TAG BootReceiver"

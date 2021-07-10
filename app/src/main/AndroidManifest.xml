@@ -34,7 +34,7 @@
         <activity android:name=".ui.home.HomeActivity" />
 
         <receiver
-            android:name=".utils.BootReceiver"
+            android:name=".utils.services.BootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

@@ -18,6 +18,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding,BaseViewModel<*>>() {
 
         Handler().postDelayed(Runnable {
             if (isUserLogin()){
+
                 startActivity(Intent(this,HomeActivity::class.java))
             }else{
                 startActivity(Intent(this,LoginActivity::class.java))

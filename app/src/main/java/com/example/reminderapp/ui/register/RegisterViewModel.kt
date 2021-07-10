@@ -26,7 +26,8 @@ class RegisterViewModel: BaseViewModel<Navigator>(){
         if (isDataValid()){
             Log.d(TAG, "register: dataValid")
             loader.value = true
-            auth.createUserWithEmailAndPassword(email.value.toString(),password.value.toString()).addOnSuccessListener {
+            auth.createUserWithEmailAndPassword(email.value.toString(),password.value.toString())
+                .addOnSuccessListener {
                 Log.d(TAG, "register: success")
                 loader.value = false
                 navigator?.goToLogin()

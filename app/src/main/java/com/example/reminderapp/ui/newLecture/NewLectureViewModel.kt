@@ -37,8 +37,9 @@ class NewLectureViewModel : BaseViewModel<Navigator>() {
                 type = lectureType.value,
                 repeatInterval = repeat,
                 time = time
-
             )
+
+
             Log.d(TAG, "confirm: repeat days $repeat")
             navigator?.insertLectureToDatabase(lecture)
 

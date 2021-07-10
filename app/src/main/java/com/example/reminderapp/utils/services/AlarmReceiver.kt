@@ -80,6 +80,7 @@ class AlarmReceiver : BroadcastReceiver() {
             Constants.NOTIFICATION_ACTION -> {
 
                 val lecture = LecturesDatabase.getInstance(context).lecturesDAO().getLecture(id)
+
                 val formatter = SimpleDateFormat("h:mm a")
                 val calendar = Calendar.getInstance()
                 calendar.timeInMillis = lecture.time!!
@@ -110,7 +111,7 @@ class AlarmReceiver : BroadcastReceiver() {
 
 
         if (audioManagerState != AudioManager.RINGER_MODE_NORMAL){
-            setRingerModeState(audioManagerState?:-1,context)
+            setRingerModeState(audioManagerState?:AudioManager.RINGER_MODE_NORMAL,context)
             audioManager?.ringerMode = AudioManager.RINGER_MODE_NORMAL
         }
         if (mediaPlayer != null) {
@@ -136,7 +137,6 @@ class AlarmReceiver : BroadcastReceiver() {
         mNotificationManager?.cancel(id)
         Log.d(TAG, "stopAlarm: stop alarm")
 
-            audioManager?.ringerMode = AudioManager.RINGER_MODE_SILENT
 
     }
 
