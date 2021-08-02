@@ -95,7 +95,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private fun getRingerModeState(context: Context):Int{
         oldAudioManagerState = audioManager?.ringerMode
         sp = context.getSharedPreferences(SP,MODE_PRIVATE)
-        val type = sp?.getInt(RINGER_KEY,-1)
+        val type = sp?.getInt(RINGER_KEY,AudioManager.RINGER_MODE_NORMAL)
         return type?:-1
     }
     private fun setRingerModeState(mode:Int,context:Context){
