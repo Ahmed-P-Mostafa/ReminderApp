@@ -33,6 +33,7 @@ The things you'll need in order to use the app and how to install them
 [View all screenshots](docs/all-screenshots.md)
 
 
+
 ## Built with
 
 * [Kotlin 1.5.10](https://kotlinlang.org/) - The programming language used
