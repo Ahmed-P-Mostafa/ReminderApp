@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:enabled="true" android:id="@+id/deleteAll" android:title="Delete all"/>
-    <item android:enabled="true" android:id="@+id/logout" android:title="Log out"/>
+    <item
+        android:id="@+id/deleteAll"
+        android:enabled="true"
+        android:title="Delete all" />
+    <item
+        android:id="@+id/logout"
+        android:enabled="true"
+        android:title="Log out" />
 
 </menu>

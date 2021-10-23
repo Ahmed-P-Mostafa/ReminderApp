@@ -1,6 +1,5 @@
 package com.example.reminderapp.ui.home
 
-import android.app.AlertDialog
 import android.os.Build
 import android.util.Log
 import android.webkit.WebView

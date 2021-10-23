@@ -1,15 +1,5 @@
 package com.example.reminderapp.di
 
-import android.content.Context
-import androidx.room.Room
-import com.example.reminderapp.pojo.database.LecturesDAO
-import com.example.reminderapp.pojo.database.LecturesDatabase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Singleton
-
 object DatabaseModule {
 
 

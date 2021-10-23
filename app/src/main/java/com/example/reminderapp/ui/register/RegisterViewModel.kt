@@ -2,7 +2,6 @@ package com.example.reminderapp.ui.register
 
 import android.util.Log
 import android.util.Patterns
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.example.reminderapp.ui.base.BaseViewModel
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="model"
             type="com.example.reminderapp.ui.login.LoginViewModel" />
@@ -13,8 +14,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.register.RegisterActivity"
-        android:background="@drawable/main_background">
+        android:background="@drawable/main_background"
+        tools:context=".ui.register.RegisterActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -99,9 +100,9 @@
                 android:id="@+id/newUserLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="New User ?"
                 android:textSize="17sp"
-                android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toStartOf="@+id/register_tv"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -112,10 +113,10 @@
                 android:id="@+id/register_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()-> model.register()}"
                 android:text=" Register"
                 android:textColor="@color/design_default_color_primary"
                 android:textSize="17sp"
-                android:onClick="@{()-> model.register()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/newUserLabel"

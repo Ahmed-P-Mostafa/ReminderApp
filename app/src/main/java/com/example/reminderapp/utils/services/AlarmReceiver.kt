@@ -9,7 +9,6 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.media.AudioManager
-import android.media.MediaPlayer
 import android.media.Ringtone
 import android.os.Build
 import android.util.Log
@@ -22,7 +21,6 @@ import com.example.reminderapp.ui.home.HomeActivity
 import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.Constants.CHANNEL_ID
 import com.example.reminderapp.utils.RingtoneHelper
-import com.google.android.gms.common.util.SharedPreferencesUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -136,7 +134,6 @@ class AlarmReceiver : BroadcastReceiver() {
         //mediaPlayer?.release()
         mNotificationManager?.cancel(id)
         Log.d(TAG, "stopAlarm: stop alarm")
-
 
     }
 

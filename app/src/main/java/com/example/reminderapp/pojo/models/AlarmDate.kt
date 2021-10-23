@@ -2,8 +2,6 @@ package com.example.reminderapp.pojo.models
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.sql.Time
-import java.time.LocalDateTime
 import java.util.*
 
 abstract class AlarmDate() {

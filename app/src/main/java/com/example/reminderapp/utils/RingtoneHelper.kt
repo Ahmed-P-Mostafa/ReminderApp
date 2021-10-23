@@ -1,9 +1,6 @@
 package com.example.reminderapp.utils
 
 import android.content.Context
-import android.content.Context.AUDIO_SERVICE
-import android.media.AudioManager
-import android.media.MediaPlayer
 import android.media.Ringtone
 import android.media.RingtoneManager
 

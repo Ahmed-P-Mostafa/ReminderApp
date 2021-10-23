@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="lecture"
             type="com.example.reminderapp.pojo.models.Lecture" />
@@ -14,9 +15,7 @@
         android:id="@+id/lecture_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-
+        android:orientation="horizontal">
 
 
         <TextView
@@ -25,19 +24,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="0.25dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:textSize="14sp"
-            android:gravity="center"
             android:ellipsize="end"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.220"
+            android:gravity="center"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:text="@{lecture.name}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/tv_code"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@{lecture.name}"
-            tools:text="web"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.220"
 
-            android:maxLines="1"/>
+            tools:text="web" />
 
         <TextView
             android:id="@+id/tv_code"
@@ -45,17 +44,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="0.25dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:textSize="14sp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.220"
+            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:ellipsize="end"
+            android:padding="4dp"
+            android:text="@{lecture.code}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/tv_place"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tv_name"
-            android:text="@{lecture.code}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.220"
             tools:text="code"
 
             />
@@ -66,19 +65,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="0.25dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:textSize="14sp"
-            android:maxLines="1"
             android:ellipsize="end"
             android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.220"
+            android:maxLines="1"
+            android:padding="4dp"
+            android:text="@{lecture.location}"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/tv_day"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/tv_code"
-            android:text="@{lecture.location}"
-            tools:text="zoom"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.220"
+            tools:text="zoom" />
 
         <TextView
             android:id="@+id/tv_day"
@@ -86,18 +84,17 @@
             android:layout_height="wrap_content"
             android:layout_margin="0.25dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:textSize="14sp"
+            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.170"
+            android:padding="4dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@id/tv_time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/tv_place"
-            tools:text="Monday"
-            />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.170"
+            tools:text="Monday" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -105,16 +102,16 @@
             android:layout_height="wrap_content"
             android:layout_margin="0.25dp"
             android:background="@color/white"
-            android:padding="4dp"
-            android:textSize="14sp"
+            android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintWidth_percent="0.170"
-            app:layout_constraintTop_toTopOf="parent"
+            android:padding="4dp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@id/tv_day"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.170"
             tools:text="9:00" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

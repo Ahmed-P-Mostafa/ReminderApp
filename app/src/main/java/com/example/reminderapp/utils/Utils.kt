@@ -1,8 +1,6 @@
 package com.example.reminderapp.utils
 
 import android.content.Context
-import android.database.DatabaseUtils
-import com.example.reminderapp.di.DatabaseModule
 import com.example.reminderapp.pojo.database.LecturesDatabase
 import java.util.*
 

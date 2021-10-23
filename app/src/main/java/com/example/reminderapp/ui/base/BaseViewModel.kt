@@ -1,6 +1,5 @@
 package com.example.reminderapp.ui.base
 
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth

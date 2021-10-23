@@ -5,14 +5,11 @@ import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.text.format.Time
 import android.widget.TimePicker
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.example.reminderapp.ui.newLecture.NewLectureActivity
-import java.time.LocalTime
 import java.util.*
-import java.util.concurrent.TimeoutException
 
 class TimePickerFragment :DialogFragment(),TimePickerDialog.OnTimeSetListener {
     @RequiresApi(Build.VERSION_CODES.N)

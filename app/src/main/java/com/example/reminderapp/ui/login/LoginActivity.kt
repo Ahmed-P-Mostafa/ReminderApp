@@ -1,14 +1,11 @@
 package com.example.reminderapp.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.reminderapp.R
 import com.example.reminderapp.databinding.ActivityLoginBinding
-import com.example.reminderapp.databinding.ActivityRegisterBinding
 import com.example.reminderapp.ui.base.BaseActivity
 import com.example.reminderapp.ui.home.HomeActivity
 import com.example.reminderapp.ui.register.RegisterActivity

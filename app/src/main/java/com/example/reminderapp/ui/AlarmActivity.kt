@@ -1,15 +1,12 @@
 package com.example.reminderapp.ui
 
-import android.app.Activity
-import android.app.PendingIntent
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.reminderapp.R
 import com.example.reminderapp.utils.Constants
 import com.example.reminderapp.utils.services.AlarmReceiver
-import kotlin.system.exitProcess
 
 class AlarmActivity : AppCompatActivity() {
     var i :Intent?=null
